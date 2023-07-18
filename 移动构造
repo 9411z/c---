@@ -78,6 +78,9 @@ int main() {
 
     // 使用移动构造函数将str1的资源转移到str2中
     MyString str2(std::move(str1));
-
+    MyString str3("world");
+    MyString str4, str5;
+    str4 = str3; // 调用复制运算符
+    str5 = std::move(str3); // 调用移动赋值运算符
     return 0;
 }
