@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+
+class MyString {
+public:
+    // 默认构造函数
+    MyString()
+        : data(nullptr), length(0) {
+        std::cout << "Default constructor called" << std::endl;
+    }
+    
+    // 构造函数
+    MyString(const char* str)
+        : length(std::strlen(str)) {
+        data = new char[length + 1];
+        std::strcpy(data, str);
+        std::cout << "Constructor called: " << data << std::endl;
+    }
+
+    // 移动构造函数
+    MyString(MyString&& other)
+        : data(other.data), length(other.length) {
+        other.data = nullptr;
+        other.length = 0;
+        std::cout << "Move constructor called: " << data << std::endl;
+    }
+
+    // 析构函数
+    ~MyString() {
+        delete[] data;
+        std::cout << "Destructor called: " << data << std::endl;
+    }
+
+private:
+    char* data;
+    std::size_t length;
+};
+
+int main() {
+    MyString str1("Hello");
+
+    // 使用移动构造函数将str1的资源转移到str2中
+    MyString str2(std::move(str1));
+
+    return 0;
+}
