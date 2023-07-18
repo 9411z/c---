@@ -32,7 +32,36 @@ public:
         std::strcpy(data, other.data);
         std::cout << "Copy constructor called: " << data << std::endl;
     }
-
+// 移动复制构造函数
+    MyString(const MyString&& other)
+        : length(other.length) {
+         if (this != &other) {
+        data = other.data;
+        other.data = nullptr;
+       }
+        std::cout << "Copy constructor called: " << data << std::endl;
+    }
+// 赋值运算符
+    MyString& operator=(const MyString& other) : length(other.length) {
+        std::cout << "move Assignment operator called" << std::endl;
+        if (this != &other) {
+            delete data;
+            data = otehr.data;
+            std::strcpy(data, other.data);
+        }
+        return *this;
+    }
+    // 移动赋值运算符
+    MyString& operator=(MyString&& other):length(other.length) {
+        std::cout << "Move assignment operator called" << std::endl;
+        if (this != &other) {
+            delete data;
+            data = other.data;
+            other.data = nullptr;
+            other.length = 0;   
+        }
+        return *this;
+    }
     // 析构函数
     ~MyString() {
         delete[] data;
